@@ -4,19 +4,21 @@ Given an array of integers and an integer k, find out whether there there are tw
 class Solution {
 public:
     /*
-        algorithm: brue force soluton
+        algorithm: brue force soluton using sort 
         1)for ith element, search same element jth, compare j-i with k
         2)iterate with all elments
-        time: O(n2) space O(1)
+        time: O(nlogn) space O(n)
     */
     bool containsNearbyDuplicate(vector<int>& nums, int k) {
-        int size = nums.size();
-        if(size < 2)return false;
-        for(int i = 0;i < size - 1;i++){
-            for(int j = i+1;j < size;j++){
-                if(nums[j] == nums[i] && abs(j-i)<= k)
-                    return true;
-            }
+        vector<pair<int,int> >pairs(nums.size());
+        for(int i = 0;i < nums.size();i++)
+            pairs[i] = make_pair(nums[i],i);
+        sort(pairs.begin(),pairs.end());
+        for(int i = 0;i < nums.size();i++){
+            if(i != 0 && 
+              pairs[i].first == pairs[i-1].first &&
+              abs(pairs[i].second - pairs[i-1].second) <= k)
+              return true;
         }
         return false;
     }
