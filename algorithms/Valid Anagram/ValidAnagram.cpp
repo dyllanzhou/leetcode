@@ -7,6 +7,19 @@ Note:
 You may assume the string contains only lowercase alphabets.
 class Solution {
 public:
+	/*hash table solution*/
+	bool isAnagram(string s, string t) {
+         if(s.size() != t.size())return false;
+         int map[256]={0};
+         for(int i = 0;i < s.size();i++){
+             map[s[i]]++;
+             map[t[i]]--;
+         }
+         for(int i = 0;i < 256;i++){
+             if(map[i] != 0)return false;
+         }
+         return true;
+    }
     //1)sort, 2)compare whther they are same
     bool isAnagram(string s, string t) {
          if(s.size() != t.size())return false;
