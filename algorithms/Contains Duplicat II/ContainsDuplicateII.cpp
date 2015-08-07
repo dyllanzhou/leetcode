@@ -3,16 +3,22 @@ Given an array of integers and an integer k, find out whether there there are tw
 */
 class Solution {
 public:
+    /*
+        algorithm2: hash table soluton
+        1)for ith element, search same element jth in hash table, compare j-i with k
+        2)iterate with all elments
+        time: O(n) space O(n)
+    */
     bool containsNearbyDuplicate(vector<int>& nums, int k) {
-        map<int,int>tbl;
-        int j;
-        for(int i = 0;i < nums.size();i++){
-            if(tbl.count(nums[i])){
-                j = tbl[nums[i]];
-                if(nums[j] == nums[i] && (i - j) <= k)
-                    return true;
+        int size = nums.size();
+        unordered_map<int,int>htbl;
+        for(int i = 0;i < size;i++){
+            if(htbl.count(nums[i]))
+            {
+                int j = htbl[nums[i]];
+                if(abs(i-j) <= k)return true;
             }
-            tbl[nums[i]] = i;
+            htbl[nums[i]] = i;
         }
         return false;
     }
